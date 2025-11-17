@@ -12,6 +12,11 @@ import java.util.UUID;
 class PostService {
     Map<String, Post> posts = new HashMap<>();
 
+    {
+        final String uuid = "0130ddee-d900-41a4-b7a2-5b1f598543e5";
+        posts.put(uuid, new Post(uuid, PostSubject.FUNNY, "Post muito divertido!"));
+    }
+
     Collection<Post> creatPost(final String content) {
         var post = new Post(UUID.randomUUID().toString(), PostSubject.OTHER, content);
         posts.put(post.id(), post);

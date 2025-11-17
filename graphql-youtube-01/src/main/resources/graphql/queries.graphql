@@ -1,0 +1,31 @@
+# Busca um `Post` e seus `Comments`
+# public Post postById(@Argument String id) {}
+# record Post(String id, PostSubject postSubject, String content) {}
+#
+query example01 {
+    postById(id: "3026cfe7-9602-4e12-b285-50ee3aaf2ba3") {
+        id
+        content
+        comments {
+            id
+            content
+            postId
+        }
+    }
+}
+
+# Retorna uma lista de `Post` com seus `Comments` filtrada pelo `PostSubject`
+# public Collection<Post> getPosts(@Argument PostSubject subject) {}
+# record Post(String id, PostSubject postSubject, String content) {}
+#
+query example02{
+    getPosts(subject: TECH) {
+        id
+        content
+        subject
+        comments {
+            id
+            content
+        }
+    }
+}

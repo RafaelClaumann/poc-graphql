@@ -1,0 +1,120 @@
+mutation {
+  createPost(content: "Meu primeiro post") {
+    id
+    content
+  }
+}
+
+{
+  "data": {
+    "createPost": [
+      {
+        "id": "042e0889-da0f-4ca4-8524-ddefc2b04e41",
+        "content": "Meu primeiro post"
+      }
+    ]
+  }
+}
+
+mutation {
+  createComment(
+    content: "Meu primeiro comment sem imagem"
+    postId: "042e0889-da0f-4ca4-8524-ddefc2b04e41"
+  ) {
+    id,
+    content,
+    postId
+  }
+}
+
+{
+  "data": {
+    "createComment": [
+      {
+        "id": "314661f4-ca43-4b63-b8ea-a4144b0935ed",
+        "content": "Meu primeiro comment sem imagem",
+        "postId": "042e0889-da0f-4ca4-8524-ddefc2b04e41"
+      }
+    ]
+  }
+}
+
+
+mutation {
+  createComment(
+    content: "Meu primeiro comment com imagem"
+    postId: "042e0889-da0f-4ca4-8524-ddefc2b04e41"
+    imageUrl: "http://localhost/img.png"
+  ) {
+    id,
+    content,
+    postId
+    ... on ImageComment {
+      imageUrl
+    }
+  }
+}
+
+
+{
+  "data": {
+    "createComment": [
+      {
+        "id": "314661f4-ca43-4b63-b8ea-a4144b0935ed",
+        "content": "Meu primeiro comment sem imagem",
+        "postId": "042e0889-da0f-4ca4-8524-ddefc2b04e41"
+      },
+      {
+        "id": "ad3ce86f-c565-4568-a1ea-67cf377eaca6",
+        "content": "Meu primeiro comment com imagem",
+        "postId": "042e0889-da0f-4ca4-8524-ddefc2b04e41",
+        "imageUrl": "http://localhost/img.png"
+      }
+    ]
+  }
+}
+
+
+query {
+  postById(id: "042e0889-da0f-4ca4-8524-ddefc2b04e41") {
+    id
+    content
+    comments {
+      ... on TextComment {
+        id
+        content
+        postId
+      }
+      ... on ImageComment {
+        id
+        content
+        imageUrl
+        postId
+      }
+    }
+  }
+
+}
+
+
+{
+  "data": {
+    "postById": {
+      "id": "042e0889-da0f-4ca4-8524-ddefc2b04e41",
+      "content": "Meu primeiro post",
+      "comments": [
+        {
+          "id": "314661f4-ca43-4b63-b8ea-a4144b0935ed",
+          "content": "Meu primeiro comment sem imagem",
+          "postId": "042e0889-da0f-4ca4-8524-ddefc2b04e41"
+        },
+        {
+          "id": "ad3ce86f-c565-4568-a1ea-67cf377eaca6",
+          "content": "Meu primeiro comment com imagem",
+          "imageUrl": "http://localhost/img.png",
+          "postId": "042e0889-da0f-4ca4-8524-ddefc2b04e41"
+        }
+      ]
+    }
+  }
+}

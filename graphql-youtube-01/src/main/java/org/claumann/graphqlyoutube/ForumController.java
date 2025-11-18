@@ -31,6 +31,11 @@ public class ForumController {
         return postService.getPosts(subject);
     }
 
+    @QueryMapping
+    public Collection<Comment> getComments() {
+        return commentService.getComments();
+    }
+
     @MutationMapping
     public Post createPost(@Argument String content) {
         return postService.createPost(content);

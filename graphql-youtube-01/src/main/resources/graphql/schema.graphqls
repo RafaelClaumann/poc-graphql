@@ -33,7 +33,10 @@ type ImageComment implements Comment {
 
 type Query {
     postById(id: ID!) : Post
-    getPosts(subject: PostSubject!): [Post]
+    getPosts(subject: PostSubject): [Post]
+
+    commentById(id: ID!): Comment
+    getComments: [Comment]
 }
 
 type Mutation {

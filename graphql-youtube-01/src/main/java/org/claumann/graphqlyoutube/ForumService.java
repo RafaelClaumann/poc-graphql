@@ -77,6 +77,10 @@ class CommentService {
         return comments.get(id);
     }
 
+    Collection<Comment> getComments() {
+        return comments.values();
+    }
+
     boolean deleteComment(final String id) {
         return comments.remove(id) != null;
     }

@@ -3,5 +3,12 @@ query fetchPost($id: ID!) {
         id
         subject
         content
+        comments {
+            id
+            content
+            ... on ImageComment {
+                imageUrl
+            }
+        }
     }
 }

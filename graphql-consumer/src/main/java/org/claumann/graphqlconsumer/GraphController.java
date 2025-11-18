@@ -24,7 +24,22 @@ public class GraphController {
     @GetMapping
     public ResponseEntity<PostResponse> queryWithRandomDocumentSource(@RequestParam final String id) {
         if (Math.random() < 0.5) {
-            String document = "query fetchPost($id: ID!) {  postById(id: $id) {  id  content } } ";
+            String document = """
+                    query fetchPost($id: ID!) {
+                        postById(id: $id) {
+                            id
+                            subject
+                            content
+                            comments {
+                                id
+                                content
+                                ... on ImageComment {
+                                    imageUrl
+                                }
+                            }
+                        }
+                    }
+                    """;
             PostResponse project = graphQlClient
                     .document(document)
                     .variable("id", id)

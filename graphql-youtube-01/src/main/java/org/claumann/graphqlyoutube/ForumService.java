@@ -8,13 +8,18 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
+class Constants {
+    public static final String POST_ID = "0130ddee-d900-41a4-b7a2-5b1f598543e5";
+    public static final String TEXT_COMMENT_ID = "9490a2dc-9e89-47c8-a8be-dd9d3981da5a";
+    public static final String IMAGE_COMMENT_ID = "3398fa22-19e4-4e2b-8272-50279e20f735";
+}
+
 @Service
 class PostService {
     Map<String, Post> posts = new HashMap<>();
 
     {
-        final String uuid = "0130ddee-d900-41a4-b7a2-5b1f598543e5";
-        posts.put(uuid, new Post(uuid, PostSubject.FUNNY, "Post muito divertido!"));
+        posts.put(Constants.POST_ID, new Post(Constants.POST_ID, PostSubject.FUNNY, "Post muito divertido!"));
     }
 
     Collection<Post> creatPost(final String content) {
@@ -50,6 +55,14 @@ class PostService {
 @Service
 class CommentService {
     Map<String, Comment> comments = new HashMap<>();
+
+    {
+        final String textCommentId = Constants.TEXT_COMMENT_ID;
+        comments.put(textCommentId, new TextComment(textCommentId, "TextComment", Constants.POST_ID));
+
+        final String imageCommentId = Constants.IMAGE_COMMENT_ID;
+        comments.put(imageCommentId, new ImageComment(imageCommentId, "ImageComment", "ImageURL.svg", Constants.POST_ID));
+    }
 
     Collection<Comment> creatComment(final String content, final String imageUrl, final String postId) {
         String commentId = UUID.randomUUID().toString();

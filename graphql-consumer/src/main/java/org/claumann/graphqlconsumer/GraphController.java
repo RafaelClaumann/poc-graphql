@@ -60,4 +60,16 @@ public class GraphController {
         return ResponseEntity.ok(project);
     }
 
+    @GetMapping("/post")
+    public ResponseEntity<PostResponse> createPostMutation() {
+        final PostResponse response = graphQlClient
+                .documentName("createPostMutation")
+                .variable("content", "CriandoPost")
+                .retrieveSync("createPost")
+                .toEntity(PostResponse.class);
+
+        logger.info("Mutating with [FILE] document");
+        return ResponseEntity.ok(response);
+    }
+
 }

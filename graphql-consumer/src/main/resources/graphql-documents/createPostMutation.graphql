@@ -1,0 +1,14 @@
+mutation createPostMutation($content: String!){
+    createPost(content: $content) {
+        id
+        content
+        subject
+        comments {
+            id
+            content
+            ... on ImageComment {
+                imageUrl
+            }
+        }
+    }
+}

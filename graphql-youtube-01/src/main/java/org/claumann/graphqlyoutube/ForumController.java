@@ -27,6 +27,11 @@ public class ForumController {
     }
 
     @QueryMapping
+    public Comment commentById(@Argument String id) {
+        return commentService.getComment(id);
+    }
+
+    @QueryMapping
     public Collection<Post> getPosts(@Argument PostSubject subject) {
         return postService.getPosts(subject);
     }

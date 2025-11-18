@@ -40,6 +40,6 @@ type Query {
 }
 
 type Mutation {
-    createPost(subject: PostSubject, content: String!): Post
+    createPost(content: String!, subject: PostSubject): Post
     createComment(content: String!, imageUrl: String, postId: String!): [Comment]
 }

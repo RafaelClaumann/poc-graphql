@@ -22,13 +22,13 @@ class PostService {
         posts.put(Constants.POST_ID, new Post(Constants.POST_ID, PostSubject.FUNNY, "Post muito divertido!"));
     }
 
-    Post createPost(final String content) {
-        return this.createPost(PostSubject.OTHER.name(), content);
-    }
-
     Post createPost(final String subject, final String content) {
-        PostSubject postSubject = PostSubject.valueOf(subject);
-        var post = new Post(UUID.randomUUID().toString(), postSubject, content);
+        PostSubject definedSubject = PostSubject.OTHER;
+        if (Objects.nonNull(subject)) {
+            definedSubject = PostSubject.valueOf(subject);
+        }
+
+        final Post post = new Post(UUID.randomUUID().toString(), definedSubject, content);
         posts.put(post.id(), post);
         return post;
     }
@@ -38,6 +38,10 @@ class PostService {
     }
 
     Collection<Post> getPosts(PostSubject subject) {
+        if (Objects.isNull(subject)) {
+            return posts.values();
+        }
+
         return posts.values()
                 .stream()
                 .filter(post -> post.postSubject() == subject)

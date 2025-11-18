@@ -40,24 +40,24 @@ public class GraphController {
                         }
                     }
                     """;
-            PostResponse project = graphQlClient
+            final PostResponse response = graphQlClient
                     .document(document)
                     .variable("id", id)
                     .retrieveSync("postById")
                     .toEntity(PostResponse.class);
 
             logger.info("Querying with [STRING] document");
-            return ResponseEntity.ok(project);
+            return ResponseEntity.ok(response);
         }
 
-        PostResponse project = graphQlClient
+        final PostResponse response = graphQlClient
                 .documentName("postById")
                 .variable("id", id)
                 .retrieveSync("postById")
                 .toEntity(PostResponse.class);
 
         logger.info("Querying with [FILE] document");
-        return ResponseEntity.ok(project);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/post")

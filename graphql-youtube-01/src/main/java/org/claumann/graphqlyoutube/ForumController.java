@@ -32,12 +32,12 @@ public class ForumController {
     }
 
     @MutationMapping
-    public Collection<Post> createPost(@Argument String content) {
+    public Post createPost(@Argument String content) {
         return postService.createPost(content);
     }
 
     @MutationMapping
-    public Collection<Post> createPostWithSubject(@Argument String subject, @Argument String content) {
+    public Post createPostWithSubject(@Argument String subject, @Argument String content) {
         return postService.createPost(subject, content);
     }
 

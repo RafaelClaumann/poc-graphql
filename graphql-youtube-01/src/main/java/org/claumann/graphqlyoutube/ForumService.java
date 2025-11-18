@@ -22,17 +22,15 @@ class PostService {
         posts.put(Constants.POST_ID, new Post(Constants.POST_ID, PostSubject.FUNNY, "Post muito divertido!"));
     }
 
-    Collection<Post> createPost(final String content) {
-        var post = new Post(UUID.randomUUID().toString(), PostSubject.OTHER, content);
-        posts.put(post.id(), post);
-        return posts.values();
+    Post createPost(final String content) {
+        return this.createPost(PostSubject.OTHER.name(), content);
     }
 
-    Collection<Post> createPost(final String subject, final String content) {
+    Post createPost(final String subject, final String content) {
         PostSubject postSubject = PostSubject.valueOf(subject);
         var post = new Post(UUID.randomUUID().toString(), postSubject, content);
         posts.put(post.id(), post);
-        return posts.values();
+        return post;
     }
 
     Post getPost(final String id) {

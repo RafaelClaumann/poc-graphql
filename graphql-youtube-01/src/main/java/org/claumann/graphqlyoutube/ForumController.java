@@ -41,6 +41,11 @@ public class ForumController {
         return postService.deletePost(id);
     }
 
+    @MutationMapping
+    public Boolean deleteComment(@Argument String id) {
+        return commentService.deleteComment(id);
+    }
+
     @QueryMapping
     public Collection<Comment> getComments() {
         return commentService.getComments();

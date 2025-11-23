@@ -1,0 +1,48 @@
+type Post {
+    id: ID!
+    subject: PostSubject
+    content: String!
+    comments: [Comment]
+}
+
+enum PostSubject {
+    TECH,
+    JOB,
+    FUNNY,
+    OTHER
+}
+
+interface Comment {
+    id: ID!
+    content: String!
+    postId: String!
+}
+
+type TextComment implements Comment {
+    id: ID!
+    content: String!
+    postId: String!
+}
+
+type ImageComment implements Comment {
+    id: ID!
+    content: String!
+    imageUrl: String!
+    postId: String!
+}
+
+type Query {
+    postById(id: ID!) : Post
+    getPosts(subject: PostSubject): [Post]
+
+    commentById(id: ID!): Comment
+    getComments: [Comment]
+}
+
+type Mutation {
+    createPost(content: String!, subject: PostSubject): Post
+    deletePost(id: String!): Boolean
+
+    createComment(content: String!, imageUrl: String, postId: String!): [Comment]
+    deleteComment(id: String!): Boolean
+}

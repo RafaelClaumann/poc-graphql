@@ -1,0 +1,51 @@
+query GET_POSTS {
+    getPosts {
+        id
+        subject
+        content
+        comments {
+            id
+            content
+            ... on ImageComment {
+                imageUrl
+            }
+        }
+    }
+}
+
+query GET_POST {
+    postById(id: "0130ddee-d900-41a4-b7a2-5b1f598543e5") {
+        id
+        subject
+        content
+        comments {
+            id
+            content
+            ... on ImageComment {
+                imageUrl
+            }
+        }
+    }
+}
+
+query GET_COMMENTS {
+    getComments {
+        id
+        content
+        postId
+        ... on ImageComment {
+            imageUrl
+        }
+    }
+}
+
+query GET_COMMENT {
+    commentById(id: "9490a2dc-9e89-47c8-a8be-dd9d3981da5a") {
+        id
+        content
+        postId
+        ... on ImageComment {
+            imageUrl
+        }
+    }
+}

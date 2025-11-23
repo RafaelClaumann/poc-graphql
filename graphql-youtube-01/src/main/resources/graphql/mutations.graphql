@@ -1,0 +1,35 @@
+# Cria um `Post` e retorna uma lista com `id` e `content` dos `Posts`
+# public Collection<ForumData.Post> createPost(String content) {}
+# record Post(String id, String content) {}
+#
+mutation example01 {
+    createPost(content: "Meu primeiro post") {
+        id,
+        content
+    }
+}
+
+# Cria um `Post` e retorna uma lista com `content` dos `Posts`
+# public Collection<ForumData.Post> createPost(@Argument String content) {}
+# record Post(String id, String content) {}
+#
+mutation example02 {
+    createPost(content: "Meu segundo post") {
+        content
+    }
+}
+
+# Cria um `Comment` associado a um `Post` e retorna a lista de `Comments`
+# Collection<ForumData.Comment> createComment(String content, String postId) {}
+# record Comment(String id, String content, String postId) {}
+#
+mutation example03 {
+    createComment(
+        content: "Meu primeiro comment"
+        postId: "a9eb889b-dd61-434e-a560-d0c7451d0ea9"
+    ) {
+        id,
+        content,
+        postId
+    }
+}

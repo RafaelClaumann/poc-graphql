@@ -1,0 +1,14 @@
+query fetchPost($id: ID!) {
+    postById(id: $id) {
+        id
+        subject
+        content
+        comments {
+            id
+            content
+            ... on ImageComment {
+                imageUrl
+            }
+        }
+    }
+}

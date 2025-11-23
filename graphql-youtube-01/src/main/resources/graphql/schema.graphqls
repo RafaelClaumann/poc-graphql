@@ -41,5 +41,6 @@ type Query {
 
 type Mutation {
     createPost(content: String!, subject: PostSubject): Post
+    deletePost(id: String!): Boolean
     createComment(content: String!, imageUrl: String, postId: String!): [Comment]
 }

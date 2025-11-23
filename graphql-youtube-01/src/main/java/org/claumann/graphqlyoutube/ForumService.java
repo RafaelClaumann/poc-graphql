@@ -18,8 +18,14 @@ class Constants {
 class PostService {
     Map<String, Post> posts = new HashMap<>();
 
+    private final CommentService commentService;
+
     {
         posts.put(Constants.POST_ID, new Post(Constants.POST_ID, PostSubject.FUNNY, "Post muito divertido!"));
+    }
+
+    PostService(CommentService commentService) {
+        this.commentService = commentService;
     }
 
     Post createPost(final String subject, final String content) {
@@ -49,6 +55,8 @@ class PostService {
     }
 
     boolean deletePost(final String id) {
+        final Collection<Comment> byPostId = commentService.findByPostId(id);
+        byPostId.forEach(comment -> commentService.deleteComment(comment.id()));
         return posts.remove(id) != null;
     }
 

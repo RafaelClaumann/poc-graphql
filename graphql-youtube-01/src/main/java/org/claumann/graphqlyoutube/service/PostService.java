@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -37,17 +38,17 @@ public class PostService {
     }
 
     public Post getPost(final String id) {
-        return posts.get(id);
+        return postRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Post with id " + id + " not found"));
     }
 
-    public Collection<Post> getPosts(PostSubject subject) {
+    public Collection<Post> getPosts(final PostSubject subject) {
         if (Objects.isNull(subject)) {
-            return posts.values();
+            return postRepository.findAll();
         }
 
-        return posts.values()
+        return postRepository.findAll()
                 .stream()
-                .filter(post -> post.postSubject() == subject)
+                .filter(post -> subject == post.postSubject())
                 .toList();
     }
 

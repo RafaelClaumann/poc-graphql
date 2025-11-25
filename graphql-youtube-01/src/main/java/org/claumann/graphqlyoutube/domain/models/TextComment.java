@@ -1,4 +1,9 @@
 package org.claumann.graphqlyoutube.domain.models;
 
-public record TextComment(String id, String content, String postId) implements Comment {
+public class TextComment extends Comment {
+
+    public TextComment(final String id, final String content, final String postId) {
+        super(id, content, postId);
+    }
+
 }

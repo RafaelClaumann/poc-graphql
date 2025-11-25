@@ -34,7 +34,7 @@ public class CommentController {
     }
 
     @MutationMapping
-    public Collection<Comment> createComment(@Argument String content, @Argument String imageUrl, @Argument String postId) {
+    public Comment createComment(@Argument String content, @Argument String imageUrl, @Argument String postId) {
         return commentService.creatComment(content, imageUrl, postId);
     }
 

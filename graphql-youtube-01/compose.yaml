@@ -1,0 +1,17 @@
+services:
+  mongo:
+    image: mongo
+    container_name: mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: pass
+    ports:
+      - "27017:27017"
+
+  compass-web:
+    image: haohanyang/compass-web:0.4.0-beta.1
+    container_name: compass-web
+    ports:
+      - "8082:8080"
+    environment:
+      CW_MONGO_URI: mongodb://root:pass@mongo:27017

@@ -1,5 +1,6 @@
 package org.claumann.graphqlyoutube.service;
 
+import org.claumann.graphqlyoutube.dataprovider.mongodb.SpringCommentRepository;
 import org.claumann.graphqlyoutube.domain.models.Comment;
 import org.claumann.graphqlyoutube.domain.models.ImageComment;
 import org.claumann.graphqlyoutube.domain.models.TextComment;
@@ -15,6 +16,8 @@ import java.util.UUID;
 public class CommentService {
     Map<String, Comment> comments = new HashMap<>();
 
+    private final SpringCommentRepository commentRepository;
+
     {
         final String textCommentId = Constants.CommentConstants.TEXT_COMMENT_ID;
         comments.put(textCommentId, new TextComment(textCommentId, "TextComment", Constants.PostConstants.POST_ID));
@@ -23,15 +26,16 @@ public class CommentService {
         comments.put(imageCommentId, new ImageComment(imageCommentId, "ImageComment", "ImageURL.svg", Constants.PostConstants.POST_ID));
     }
 
-    public Collection<Comment> creatComment(final String content, final String imageUrl, final String postId) {
-        String commentId = UUID.randomUUID().toString();
+    public CommentService(SpringCommentRepository commentRepository) {
+        this.commentRepository = commentRepository;
+    }
+
+    public Comment creatComment(final String content, final String imageUrl, final String postId) {
         if (Objects.isNull(imageUrl)) {
-            comments.put(commentId, new TextComment(commentId, content, postId));
-            return comments.values();
+            return commentRepository.save(new TextComment(UUID.randomUUID().toString(), content, postId));
         }
 
-        comments.put(commentId, new ImageComment(commentId, content, imageUrl, postId));
-        return comments.values();
+        return commentRepository.save(new ImageComment(UUID.randomUUID().toString(), content, imageUrl, postId));
     }
 
     public Comment getComment(final String id) {

@@ -1,5 +1,6 @@
 package org.claumann.graphqlyoutube.service;
 
+import org.claumann.graphqlyoutube.dataprovider.mongodb.SpringPostRepository;
 import org.claumann.graphqlyoutube.domain.models.Comment;
 import org.claumann.graphqlyoutube.domain.models.Post;
 import org.claumann.graphqlyoutube.domain.models.PostSubject;
@@ -15,14 +16,14 @@ import java.util.UUID;
 public class PostService {
     Map<String, Post> posts = new HashMap<>();
 
+    private final SpringPostRepository postRepository;
     private final CommentService commentService;
 
-    {
-        posts.put(Constants.PostConstants.POST_ID, new Post(Constants.PostConstants.POST_ID, PostSubject.FUNNY, "Post muito divertido!"));
-    }
-
-    PostService(CommentService commentService) {
+    PostService(SpringPostRepository postRepository, CommentService commentService) {
+        this.postRepository = postRepository;
         this.commentService = commentService;
+
+        postRepository.save(new Post(Constants.PostConstants.POST_ID, PostSubject.FUNNY, "Post muito divertido!"));
     }
 
     public Post createPost(final String subject, final String content) {
@@ -32,8 +33,7 @@ public class PostService {
         }
 
         final Post post = new Post(UUID.randomUUID().toString(), definedSubject, content);
-        posts.put(post.id(), post);
-        return post;
+        return postRepository.save(post);
     }
 
     public Post getPost(final String id) {

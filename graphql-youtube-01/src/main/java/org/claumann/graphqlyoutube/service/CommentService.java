@@ -48,7 +48,12 @@ public class CommentService {
     }
 
     public boolean deleteComment(final String id) {
-        return comments.remove(id) != null;
+        try {
+            commentRepository.deleteById(id);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     public Collection<Comment> findByPostId(final String postId) {

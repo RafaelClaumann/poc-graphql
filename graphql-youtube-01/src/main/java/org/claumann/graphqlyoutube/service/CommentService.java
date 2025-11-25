@@ -7,28 +7,20 @@ import org.claumann.graphqlyoutube.domain.models.TextComment;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.UUID;
 
 @Service
 public class CommentService {
-    Map<String, Comment> comments = new HashMap<>();
 
     private final SpringCommentRepository commentRepository;
 
-    {
-        final String textCommentId = Constants.CommentConstants.TEXT_COMMENT_ID;
-        comments.put(textCommentId, new TextComment(textCommentId, "TextComment", Constants.PostConstants.POST_ID));
-
-        final String imageCommentId = Constants.CommentConstants.IMAGE_COMMENT_ID;
-        comments.put(imageCommentId, new ImageComment(imageCommentId, "ImageComment", "ImageURL.svg", Constants.PostConstants.POST_ID));
-    }
-
     public CommentService(SpringCommentRepository commentRepository) {
         this.commentRepository = commentRepository;
+
+        commentRepository.save(new TextComment(Constants.CommentConstants.TEXT_COMMENT_ID, "TextComment", Constants.PostConstants.POST_ID));
+        commentRepository.save(new ImageComment(Constants.CommentConstants.IMAGE_COMMENT_ID, "ImageComment", Constants.PostConstants.POST_ID, "ImageURL.svg"));
     }
 
     public Comment creatComment(final String content, final String imageUrl, final String postId) {
@@ -57,10 +49,7 @@ public class CommentService {
     }
 
     public Collection<Comment> findByPostId(final String postId) {
-        return comments.values()
-                .stream()
-                .filter(comment -> comment.postId().equals(postId))
-                .toList();
+        return commentRepository.findCommentByPostId(postId);
     }
 
 }

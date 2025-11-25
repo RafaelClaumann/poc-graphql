@@ -5,6 +5,7 @@ import org.claumann.graphqlyoutube.domain.models.Comment;
 import org.claumann.graphqlyoutube.domain.models.Post;
 import org.claumann.graphqlyoutube.domain.models.PostSubject;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -52,10 +53,17 @@ public class PostService {
                 .toList();
     }
 
+    @Transactional
     public boolean deletePost(final String id) {
-        final Collection<Comment> byPostId = commentService.findByPostId(id);
-        byPostId.forEach(comment -> commentService.deleteComment(comment.id()));
-        return posts.remove(id) != null;
+        try {
+            final Collection<Comment> comments = commentService.findByPostId(id);
+            comments.forEach(comment -> commentService.deleteComment(comment.id()));
+
+            postRepository.deleteById(id);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
 }

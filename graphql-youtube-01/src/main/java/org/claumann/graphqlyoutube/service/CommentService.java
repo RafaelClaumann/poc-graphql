@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -39,11 +40,11 @@ public class CommentService {
     }
 
     public Comment getComment(final String id) {
-        return comments.get(id);
+        return commentRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Comment with id " + id + " not found"));
     }
 
     public Collection<Comment> getComments() {
-        return comments.values();
+        return commentRepository.findAll();
     }
 
     public boolean deleteComment(final String id) {

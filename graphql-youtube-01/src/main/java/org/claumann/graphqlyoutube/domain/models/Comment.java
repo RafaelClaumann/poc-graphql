@@ -1,12 +1,13 @@
 package org.claumann.graphqlyoutube.domain.models;
 
-import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.FieldType;
+import org.springframework.data.mongodb.core.mapping.MongoId;
 
 @Document(collection = "comments")
 public class Comment {
 
-    @Id
+    @MongoId(FieldType.STRING)
     private final String id;
     private final String content;
     private final String postId;
